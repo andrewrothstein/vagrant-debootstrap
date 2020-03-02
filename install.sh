@@ -21,6 +21,7 @@ modprobe zfs
 echo configuring chroot...
 mkdir -p $ROOT_DIR
 cp chroot-entry.sh $ROOT_DIR/chroot-entry.sh
+cp debootstrap-lib.sh $ROOT_DIR/debootstrap-lib.sh
 /usr/sbin/debootstrap --arch amd64 $OS_VER $ROOT_DIR http://ftp.us.debian.org/debian/
 mount -t proc /proc $ROOT_DIR/proc/
 mount -t sysfs /sys $ROOT_DIR/sys/

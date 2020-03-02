@@ -27,7 +27,7 @@ install_debootstrap () {
 }
 
 install_zfs () {
-    apt install -y gdisk dpkg-dev linux-headers-$(uname -r) htop nethogs
+    apt install -y gdisk dpkg-dev linux-headers-amd64 htop nethogs
     apt install -y dkms spl-dkms
     apt install -y zfs-dkms zfsutils-linux
 }
