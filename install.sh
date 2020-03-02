@@ -28,4 +28,4 @@ mount -t sysfs /sys $ROOT_DIR/sys/
 mount -o bind /dev $ROOT_DIR/dev/
 echo chroots away...
 chroot $ROOT_DIR /chroot-entry.sh
-printf "%s: done" $(date)
+echo done: $(date)
