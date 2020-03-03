@@ -39,3 +39,14 @@ install_cloud_init () {
 apt_not_interactive () {
     export DEBIAN_FRONTEND=noninteractive
 }
+
+create_zpool_and_root_zfs () {
+    local zpool_name=$1
+    local zpool_backing_file=$2
+    local zfs_name=$3
+    local bs=1M
+    local count=8096
+    dd if=/dev/zero of=$zpool_backing_file bs=$bs count=$count
+    zpool create $zpool_name $zpool_backing_file
+    zfs create $zpool_name/$zfs_name
+}

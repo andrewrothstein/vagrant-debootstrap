@@ -2,7 +2,6 @@
 set -xe
 
 OS_VER=${1:-buster}
-ROOT_DIR=${2:-/mnt}
 
 . ./debootstrap-lib.sh
 
@@ -18,8 +17,15 @@ echo probing for zfs kernel module...
 udevadm trigger
 modprobe zfs
 
-echo configuring chroot...
-mkdir -p $ROOT_DIR
+ZPOOL_NAME=tank
+ZPOOL_BACKING_FILE=/tank-zpool-backing-file
+ZFS_NAME=root
+ROOT_DIR=/$ZPOOL_NAME/$ZFS_NAME
+
+echo creating zpool $ZPOOL_NAME backed by $ZPOOL_BACKING_FILE with an fs at $ROOT_DIR...
+create_zpool_and_root_zfs $ZPOOL_NAME $ZPOOL_BACKING_FILE $ZFS_NAME
+
+echo configuring chroot at $ROOT_DIR...
 cp chroot-entry.sh $ROOT_DIR/chroot-entry.sh
 cp debootstrap-lib.sh $ROOT_DIR/debootstrap-lib.sh
 /usr/sbin/debootstrap --arch amd64 $OS_VER $ROOT_DIR http://ftp.us.debian.org/debian/
